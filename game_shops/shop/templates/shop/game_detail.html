@@ -5,10 +5,17 @@
     <p>Platform: {{ game.platform }}</p>
     <p>Genre: {{ game.genre }}</p>
     <p>Price: ${{ game.price }}</p>
+    <p>
+        {% if game.stock > 0 %}
+            <strong>Stock: {{ game.stock }}</strong>
+        {% else %}
+            <strong class="text-danger">Out of Stock</strong>
+        {% endif %}
+    </p>
 
     {% if game.stock > 0 %}
         <a href="{% url 'add_to_cart' game.id %}" class="btn btn-success">Add to Basket</a>
     {% else %}
-        <p class="text-danger">Out of Stock</p>
+        <button class="btn btn-danger" disabled>Out of Stock</button>
     {% endif %}
 {% endblock %}
