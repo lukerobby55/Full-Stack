@@ -3,7 +3,7 @@ cd ~/Documents  # Or wherever you store projects
 mkdir game_shop
 cd game_shop
 python3 -m venv venv  # Create virtual environment
-source venv/bin/activate  # Activate virtual environment
+source venv/bin/activate or venv\Scripts\activate # Activate virtual environment
 pip install django  # Install Django
 django-admin startproject game_store .  # Start project
 django-admin startapp shop  # Create the app
