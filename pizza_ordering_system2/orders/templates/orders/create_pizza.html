@@ -1,0 +1,178 @@
+{% extends 'orders/base.html' %}
+{% load static %} 
+
+{% block content %}
+<div class="content-wrapper">
+    <div class="overlay"></div> 
+
+    <div class="container form-container">
+        <h2 class="page-title">Build Your Perfect Pizza</h2>
+
+        <form method="post" class="pizza-form">
+            {% csrf_token %}
+
+            <div class="row">
+                
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.size.id_for_label }}" class="form-label">Select Size:</label>
+                    <div class="input-wrapper">
+                        {{ form.size }}
+                    </div>
+                </div>
+
+                
+                <div class="col-md-6 mb-3">
+                    <label for="{{ form.crust.id_for_label }}" class="form-label">Select Crust:</label>
+                    <div class="input-wrapper">
+                        {{ form.crust }}
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="mb-3">
+                <label for="{{ form.sauce.id_for_label }}" class="form-label">Choose Sauce:</label>
+                <div class="input-wrapper">
+                    {{ form.sauce }}
+                </div>
+            </div>
+
+            
+            <div class="mb-3">
+                <label for="{{ form.cheese.id_for_label }}" class="form-label">Select Cheese:</label>
+                <div class="input-wrapper">
+                    {{ form.cheese }}
+                </div>
+            </div>
+
+            
+            <div class="mb-3">
+                <label class="form-label">Select Toppings:</label>
+                <div class="topping-options">
+                    {% for checkbox in form.toppings %}
+                        <div class="topping-item">{{ checkbox }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <button type="submit" class="btn custom-btn">Next</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
+    .content-wrapper {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url("{% static 'images/restaurant.jpg' %}") no-repeat center center fixed;
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: -1;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.55);
+        z-index: 1;
+    }
+
+    .form-container {
+        background: rgba(0, 0, 0, 0.75);
+        color: white;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
+        position: relative;
+        z-index: 2;
+        max-width: 650px;
+        width: 90%;
+        margin: 12vh auto 0 auto;
+    }
+
+    .page-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2.2rem;
+        font-weight: bold;
+        color: #FFD700;
+        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+        margin-bottom: 20px;
+    }
+
+    .input-wrapper {
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 6px;
+        padding: 8px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .pizza-form select {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: none;
+        background: transparent;
+        box-shadow: none;
+    }
+
+    .topping-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 12px;
+        border-radius: 6px;
+        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+        max-height: 150px;
+        overflow-y: auto;
+        justify-content: center;
+    }
+
+    .topping-item {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 10px;
+        border-radius: 4px;
+        background: rgba(255, 255, 255, 0.8);
+        font-weight: bold;
+        color: black;
+    }
+
+    .topping-item input[type="checkbox"] {
+        transform: scale(1.2); 
+    }
+
+    .custom-btn {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.2rem;
+        font-weight: bold;
+        background-color: #FFD700;
+        color: #8B0000 !important;
+        border: 2px solid #FFD700;
+        padding: 10px 20px;
+        border-radius: 10px;
+        transition: all 0.3s ease-in-out;
+        margin-top: 10px;
+    }
+
+    .custom-btn:hover {
+        background-color: #8B0000;
+        color: #FFD700 !important;
+        transform: scale(1.05);
+        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+    }
+</style>
+
+{% endblock %}
