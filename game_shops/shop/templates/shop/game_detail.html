@@ -1,0 +1,14 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+    <h2>{{ game.name }}</h2>
+    <p>{{ game.description }}</p>
+    <p>Platform: {{ game.platform }}</p>
+    <p>Genre: {{ game.genre }}</p>
+    <p>Price: ${{ game.price }}</p>
+
+    {% if game.stock > 0 %}
+        <a href="{% url 'add_to_cart' game.id %}" class="btn btn-success">Add to Basket</a>
+    {% else %}
+        <p class="text-danger">Out of Stock</p>
+    {% endif %}
+{% endblock %}
