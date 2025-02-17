@@ -1,0 +1,147 @@
+1. Project Setup
+cd ~/Documents  # Or wherever you store projects
+mkdir game_shop
+cd game_shop
+python3 -m venv venv  # Create virtual environment
+source venv/bin/activate  # Activate virtual environment
+pip install django  # Install Django
+django-admin startproject game_store .  # Start project
+django-admin startapp shop  # Create the app
+pip install pillow  # Install Pillow for image handling
+
+Now register app in settings.py inside INSTALLED_APPS
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'shop',  # Our game shop app
+]
+
+2.Define Models (shop/models.py)
+from django.db import models
+
+class Game(models.Model):
+    PLATFORM_CHOICES = [
+        ('PS5', 'PlayStation 5'),
+        ('XBOX', 'Xbox One'),
+        ('SWITCH', 'Nintendo Switch'),
+        ('PC', 'PC'),
+    ]
+    
+    GENRE_CHOICES = [
+        ('SHOOTER', 'Shooter'),
+        ('ACTION', 'Action'),
+        ('ADVENTURE', 'Adventure'),
+        ('RPG', 'RPG'),
+        ('SPORTS', 'Sports'),
+    ]
+
+    name = models.CharField(max_length=255)
+    description = models.TextField()
+    platform = models.CharField(max_length=10, choices=PLATFORM_CHOICES)
+    genre = models.CharField(max_length=15, choices=GENRE_CHOICES)
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    stock = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.name
+
+After this, run:
+python manage.py makemigrations
+python manage.py migrate
+
+After this, open shop/admin and add:
+from django.contrib import admin
+from .models import Game
+
+@admin.register(Game)
+class GameAdmin(admin.ModelAdmin):
+    list_display = ('name', 'platform', 'genre', 'price', 'stock')
+    search_fields = ('name', 'platform', 'genre')
+
+Next, create a superuser:
+python manage.py createsuperuser
+
+Once done, restart server:
+python manage.py runserver
+
+Then, go to http://127.0.0.1:8000/admin/ to add game
+
+3. Create Views
+Open shop/views.py and define game list view
+
+3.1 View all games
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Game
+
+def game_list(request):
+    games = Game.objects.all()
+    return render(request, 'shop/game_list.html', {'games': games})
+
+3.2 View an Individual Game
+Add this to views.py
+
+def game_detail(request, game_id):
+    game = get_object_or_404(Game, id=game_id)
+    return render(request, 'shop/game_detail.html', {'game': game})
+
+3.3 View Console Games
+Add this to views.py
+def console_games(request):
+    console_platforms = ['PS5', 'XBOX', 'SWITCH']
+    games = Game.objects.filter(platform__in=console_platforms)
+    return render(request, 'shop/console_games.html', {'games': games})
+
+3.4 View PC Games
+Add this to views.py
+def pc_games(request):
+    games = Game.objects.filter(platform='PC')
+    return render(request, 'shop/pc_games.html', {'games': games})
+
+3.5 Add to Basket
+Add this to views.py
+def add_to_cart(request, game_id):
+    cart = request.session.get('cart', {})
+
+    game_id = str(game_id)
+    cart[game_id] = cart.get(game_id, 0) + 1
+
+    request.session['cart'] = cart
+    request.session.modified = True
+
+    return redirect('basket_view')
+
+3.6 View Shopping Basket
+Add to views.py
+def basket_view(request):
+    cart = request.session.get('cart', {})
+    games = Game.objects.filter(id__in=cart.keys())
+
+    for game in games:
+        game.quantity = cart.get(str(game.id), 0)
+
+    return render(request, 'shop/basket.html', {'games': games})
+
+4. Define URLs
+Open shop/urls.py to define routes
+
+from django.urls import path
+from .views import game_list, game_detail, console_games, pc_games, add_to_cart, 
+basket_view
+
+urlpatterns = [
+    path('', game_list, name='game_list'),
+    path('game/<int:game_id>/', game_detail, name='game_detail'),
+    path('console-games/', console_games, name='console_games'),
+    path('pc-games/', pc_games, name='pc_games'),
+    path('add-to-cart/<int:game_id>/', add_to_cart, name='add_to_cart'),
+    path('basket/', basket_view, name='basket_view'),
+]
+
+5. Create Templates
+Check templates/shop and add accordingly
+
+6. Runserver

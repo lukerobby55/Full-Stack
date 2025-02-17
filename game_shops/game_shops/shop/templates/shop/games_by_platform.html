@@ -1,0 +1,12 @@
+{% extends 'shop/base.html' %}
+{% block content %}
+<h2>Games for {{ platform }}</h2>
+{% for game in games %}
+    <div>
+        <h3>{{ game.name }}</h3>
+        <a href="{% url 'game_detail' game.id %}">View</a>
+    </div>
+{% empty %}
+    <p>No games found.</p>
+{% endfor %}
+{% endblock %}
