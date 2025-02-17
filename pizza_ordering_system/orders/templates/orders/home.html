@@ -2,97 +2,10 @@
 {% load static %}  
 
 {% block content %}
-<div class="content-wrapper">
-    <div class="overlay"></div> 
-    <h1 class="italian-font">Luigi's Woodfire Pizza</h1>
+<div class="container text-center">
+    <h1>Luigi's Woodfire Pizza</h1>
     <p>
-        <a href="{% url 'create_pizza' %}" class="btn custom-btn">Create a Pizza</a>
+        <a href="{% url 'create_pizza' %}">Create a Pizza</a>
     </p>
 </div>
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@600&display=swap');
-
-   
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
-
-   
-    .content-wrapper {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: url("{% static 'images/pizza-background.jpg' %}") no-repeat center center fixed;
-        background-size: cover;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        z-index: -1;
-    }
-
-    
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5); 
-        z-index: 1;
-    }
-
-    
-    .italian-font {
-        font-family: 'Great Vibes', cursive;
-        font-size: 5rem;
-        font-weight: bold;
-        color: #C9A315; 
-        text-shadow: 
-            1px 1px 2px rgba(0, 0, 0, 0.8), 
-            3px 3px 8px rgba(255, 215, 0, 0.4), 
-            -2px -2px 6px rgba(255, 140, 0, 0.3); 
-        margin-bottom: 20px;
-        letter-spacing: 2px;
-        position: relative;
-        z-index: 2;
-    }
-
-    
-    .custom-btn {
-        font-family: 'Playfair Display', serif;
-        font-size: 1.3rem;
-        font-weight: bold;
-        background-color: #B8860B; 
-        color: #ffffff !important;
-        border: 2px solid #FFD700;
-        padding: 12px 24px;
-        border-radius: 12px;
-        text-transform: uppercase;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 
-            3px 3px 8px rgba(0, 0, 0, 0.3), 
-            0px 0px 12px rgba(255, 215, 0, 0.4); 
-        position: relative;
-        z-index: 3;
-        cursor: pointer;
-    }
-
-    .custom-btn:hover {
-        background-color: #8B0000; 
-        color: #FFD700 !important;
-        border: 2px solid #FFD700;
-        transform: scale(1.08);
-        box-shadow: 
-            4px 4px 12px rgba(0, 0, 0, 0.4), 
-            0px 0px 16px rgba(255, 215, 0, 0.5); 
-    }
-</style>
-
 {% endblock %}

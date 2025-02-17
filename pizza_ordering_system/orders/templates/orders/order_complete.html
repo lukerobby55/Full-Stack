@@ -1,181 +1,28 @@
 {% extends 'orders/base.html' %}
-{% load static %}
+{% load static %}  
 
 {% block content %}
-<div class="content-wrapper">
-    <div class="overlay"></div> 
-
-    <div class="container order-complete-container">
-        <h2 class="page-title">🎉 Thank You for Your Order! 🎉</h2>
-        <p>Your delicious pizza is being prepared. Here are your order details:</p>
-
-       
-        <div class="order-details-wrapper">
-            
-            <div class="order-card">
-                <h4 class="card-title"><i class="bi bi-clock"></i> 🕒 Estimated Delivery Time:</h4>
-                <p class="lead"><strong>{{ delivery_window }}</strong></p>
-            </div>
-
-            
-            <div class="order-card">
-                <h4 class="card-title"><i class="bi bi-box"></i> 📦 Delivery Details</h4>
-                <div class="details-list">
-                    <p><strong>Name:</strong> {{ order.name }}</p>
-                    <p><strong>Address:</strong> {{ order.address }}</p>
-                </div>
-            </div>
-
-            
-            <div class="order-card">
-                <h4 class="card-title"><i class="bi bi-pizza"></i> 🍕 Your Pizza</h4>
-                <div class="details-list">
-                    <p><strong>Size:</strong> {{ order.pizza.size.name }}</p>
-                    <p><strong>Crust:</strong> {{ order.pizza.crust.name }}</p>
-                    <p><strong>Sauce:</strong> {{ order.pizza.sauce.name }}</p>
-                    <p><strong>Cheese:</strong> {{ order.pizza.cheese.name }}</p>
-                    <p><strong>Toppings:</strong> 
-                        {% for topping in order.pizza.toppings.all %}
-                            {{ topping.name }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            No Toppings
-                        {% endfor %}
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <a href="{% url 'home' %}" class="btn custom-btn mt-4">Back to Home</a>
-    </div>
+<div class="container text-center">
+    <h2>Thank You for Your Order!</h2>
+    <p>Your pizza is being prepared. Here are your order details:</p>
+    
+    <p><strong>Estimated Delivery Time:</strong> {{ delivery_window }}</p>
+    <p><strong>Name:</strong> {{ order.name }}</p>
+    <p><strong>Address:</strong> {{ order.address }}</p>
+    
+    <h3>Your Pizza</h3>
+    <p><strong>Size:</strong> {{ order.pizza.size.name }}</p>
+    <p><strong>Crust:</strong> {{ order.pizza.crust.name }}</p>
+    <p><strong>Sauce:</strong> {{ order.pizza.sauce.name }}</p>
+    <p><strong>Cheese:</strong> {{ order.pizza.cheese.name }}</p>
+    <p><strong>Toppings:</strong> 
+        {% for topping in order.pizza.toppings.all %}
+            {{ topping.name }}{% if not forloop.last %}, {% endif %}
+        {% empty %}
+            No Toppings
+        {% endfor %}
+    </p>
+    
+    <a href="{% url 'home' %}">Back to Home</a>
 </div>
-
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
-
-    
-    .content-wrapper {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background: url("{% static 'images/restaurant.jpg' %}") no-repeat center center fixed;
-        background-size: cover;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start; 
-        text-align: center;
-        z-index: -1;
-        overflow-y: auto; 
-        padding-top: 10vh; 
-    }
-
-    
-    .overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5); 
-        z-index: 1;
-    }
-
-    
-    .order-complete-container {
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        border-radius: 12px;
-        padding: 20px; 
-        box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.3);
-        position: relative;
-        z-index: 2;
-        max-width: 600px; 
-        width: 80%;
-        margin: auto;
-        text-align: center;
-    }
-
-    
-    .order-details-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 15px; 
-        align-items: center;
-        width: 100%;
-    }
-
-    
-    .order-card {
-        background: rgba(255, 255, 255, 0.9);
-        color: black;
-        padding: 10px;
-        border-radius: 8px;
-        box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
-        width: 100%;
-        max-width: 500px;
-    }
-
-    
-    .details-list p {
-        display: flex;
-        justify-content: space-between;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-        padding-bottom: 5px;
-        margin-bottom: 5px;
-    }
-
-    .details-list p strong {
-        width: 90px;  
-        text-align: left;
-        font-size: 0.9rem; 
-    }
-
-    
-    .page-title {
-        font-family: 'Playfair Display', serif;
-        font-size: 2.2rem; 
-        font-weight: bold;
-        color: #FFD700; 
-        text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
-        position: relative;
-        z-index: 2;
-        margin-bottom: 15px; 
-    }
-
-    
-    .custom-btn {
-        font-family: 'Playfair Display', serif;
-        font-size: 1rem;
-        font-weight: bold;
-        background-color: #FFD700;
-        color: #8B0000 !important;
-        border: 2px solid #FFD700;
-        padding: 8px 18px;
-        border-radius: 10px;
-        text-transform: uppercase;
-        transition: all 0.3s ease-in-out;
-        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-    }
-
-    .custom-btn:hover {
-        background-color: #8B0000;
-        color: #FFD700 !important;
-        transform: scale(1.05);
-        box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    
-    @media (max-width: 768px) {
-        .order-complete-container {
-            width: 90%;
-            padding: 15px; 
-        }
-        .order-card {
-            width: 100%;
-        }
-    }
-</style>
-
 {% endblock %}
