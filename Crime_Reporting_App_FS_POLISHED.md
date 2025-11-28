@@ -229,4 +229,35 @@ To be completed (Gantt chart).
 # 7. Appendices
 - Glossary  
 - UML Diagrams  
-- TBD Items  
+- TBD Items
+- 
+
+```mermaid
+gantt
+    title Crime Reporting App - Preliminary Schedule
+    dateFormat  YYYY-MM-DD
+    axisFormat  %b %d
+
+    section Planning
+    Requirements Gathering        :active,  t1, 2024-12-27, 10d
+    Architecture Design           :         t2, 2025-01-06, 7d
+    UI Wireframes                 :         t3, 2025-01-13, 5d
+
+    section Backend
+    Backend Setup                 :         t4, 2025-01-20, 7d
+    Database Setup                :         t5, 2025-01-20, 7d
+    Crime Reporting API           :         t6, 2025-01-27, 7d
+    Push Notification System      :         t7, 2025-02-03, 7d
+
+    section Frontend
+    React Native Frontend Setup   :         t8, 2025-02-10, 5d
+    Map Integration               :         t9, 2025-02-15, 5d
+    Hotspot Visualisation         :         t10,2025-02-20, 5d
+
+    section Integration & Testing
+    Full System Integration       :         t11,2025-02-15, 5d
+    Testing + Bug Fixes           :         t12,2025-02-20, 8d
+
+    section Finalisation
+    Final Reporting & Submission  :         t13,2025-02-26, 3d
+
